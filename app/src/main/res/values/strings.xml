@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RatingMeals</string>
+    <string name="please_rate_the_meal">Please rate the meal.</string>
+    <string name="submit">submit</string>
 </resources>
