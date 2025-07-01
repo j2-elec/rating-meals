@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class StatsActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish() // returns to MainActivity
         }
+        val suggestionsListView = findViewById<ListView>(R.id.statsListView)
         val resetButton = findViewById<Button>(R.id.resetButton);
         val avgScore = findViewById<TextView>(R.id.avgScore);
         val filename = "canteen_stats.txt"
@@ -51,17 +53,22 @@ class StatsActivity : AppCompatActivity() {
             0.0
         }
 
-        avgScore.text = "Average score: %.2f".format(average)
+        avgScore.text = "Scor Median: %.2f".format(average)
 
+        val displayList = statsList.map { (score, suggestion) ->
+            "Scor: $score - Sugestii: $suggestion"
+        }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, displayList)
+        suggestionsListView.adapter = adapter
 // Parse lines to calculate average and display suggestions
         resetButton.setOnClickListener {
             openFileOutput(filename, Context.MODE_PRIVATE).use {
                 it.write("".toByteArray())
             }
             // Clear UI
-            avgScore.text = "Average score: 0.00"
+            avgScore.text = "Scor median: 0.00"
             val emptyAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listOf<String>())
-            //suggestionsListView.adapter = emptyAdapter
+            suggestionsListView.adapter = emptyAdapter
         }
     }
 }

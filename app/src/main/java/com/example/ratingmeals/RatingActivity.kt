@@ -34,6 +34,7 @@ class RatingActivity : AppCompatActivity() {
         val suggestionEditText = findViewById<EditText>(R.id.sugestionText)
         val submitButton = findViewById<Button>(R.id.submitButton);
         submitButton.setOnClickListener {
+            val intent = Intent(this, SuccessScreen::class.java)
 
             val score = ratingBar.rating.toInt()
             val suggestion = suggestionEditText.text.toString()
@@ -43,17 +44,23 @@ class RatingActivity : AppCompatActivity() {
             openFileOutput(filename, Context.MODE_APPEND).use {
                 it.write(fileContents.toByteArray())
             }
-            // Show a Toast message
-            val toast = Toast.makeText(this, "Raspuns salvat!", Toast.LENGTH_LONG)
-            toast.show()
-
-            // Handler to delay reset by 3 seconds (3000 ms)
             Handler(Looper.getMainLooper()).postDelayed({
                 // Reset RatingBar and EditText
-                ratingBar.rating = 0f
+                ratingBar.rating = 3f;
                 suggestionEditText.text.clear()
-                toast.cancel() // Hide the toast if it's still visible
-            }, 5000)
+            }, 1000)
+            startActivity(intent)
+//            // Show a Toast message
+//            val toast = Toast.makeText(this, "Raspuns salvat!", Toast.LENGTH_LONG)
+//            toast.show()
+//
+//            // Handler to delay reset by 3 seconds (3000 ms)
+//            Handler(Looper.getMainLooper()).postDelayed({
+//                // Reset RatingBar and EditText
+//                ratingBar.rating = 0f
+//                suggestionEditText.text.clear()
+//                toast.cancel() // Hide the toast if it's still visible
+//            }, 5000)
         }
     }
 
